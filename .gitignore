@@ -1,0 +1,16 @@
+# 実行ファイルや不要なファイルを無視する設定を作る
+cat << 'EOF' > .gitignore
+# コンパイル済みの実行ファイル
+*.out
+main
+*.exe
+
+# 隠しファイルなど
+.DS_Store
+.vscode/
+
+# 入力ファイルなど（必要なら）
+in
+out
+N
+EOF
