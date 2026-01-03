@@ -1,26 +1,25 @@
-# コンパイラ
 CXX = g++
-
-# コンパイルオプション (競技プログラミング向け)
 CXXFLAGS = -Wall -Wextra -Werror -std=c++17 -O2
-
-# 実行ファイル名 (ここではディレクトリ名ではなく、問題を解くプログラムという意味で 'a.out' にすることが多い)
 TARGET = a.out
-
-# ソースファイル
 SRCS = main.cpp
 
-# デフォルトターゲット: makeを実行した時に呼ばれる
+# デフォルトターゲット（ただ make と打った時）
 all: $(TARGET)
 
-# 実行ファイルを生成するルール
+# コンパイル
 $(TARGET): $(SRCS)
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-# 実行ファイルを実行するルール (make run で実行)
+# ★ここを追加：テスト実行
+# $(TARGET) に依存しているので、変更があれば勝手にコンパイルしてからテストしてくれる
+test: $(TARGET)
+	oj t -c "./$(TARGET)"
+
+# 実行（手動入力用）
 run: $(TARGET)
 	./$(TARGET)
 
-# コンパイルで生成されたファイルを削除する
+# 掃除
 clean:
 	rm -f $(TARGET)
+	rm -rf test
