@@ -11,6 +11,7 @@
 #include <iomanip>
 #include <limits>
 #include <numeric>
+#include <functional>
 
 using namespace std;
 using ll = long long;
@@ -29,18 +30,17 @@ int main(void) {
         cin >> k[i];
         total_sum += k[i];
     }
-
-    ll max_sum = -2e9;
-    ll ans = 2e9;
-    for (int bit = 0; bit < (1 << n); ++bit) {
-        ll sum_a = 0;
-        for (int digit = 0; digit < n; ++digit) {
-            if (bit & (1 << digit)) sum_a += k[digit];
+    ll ans = 1e18;
+    function<void(ll, int)> dfs = [&](ll sum_a, int i) {
+        if (i == n) {
+            ll sum_b = total_sum - sum_a;
+            ans = min(ans, max(sum_a, sum_b));
+            return;
         }
-        ll sum_b = total_sum - sum_a;
-        max_sum = max(sum_a, sum_b);
-        ans = min(ans, max_sum);
-    }
+        dfs(sum_a + k[i], i + 1);
+        dfs(sum_a, i + 1);
+    };
+    dfs(0, 0);
     cout << ans << "\n";
     return 0;
 }
