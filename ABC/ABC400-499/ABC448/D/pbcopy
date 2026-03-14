@@ -1,0 +1,16 @@
+main.cpp:46:13: error: variable 'dfs' declared with deduced type 'auto' cannot appear in its own initializer
+   46 |             dfs(nx, v);
+      |             ^
+main.cpp:46:13: error: variable 'dfs' declared with deduced type 'auto' cannot appear in its own initializer
+   46 |             dfs(nx, v);
+      |             ^
+main.cpp:39:25: error: unused parameter 'self' [-Werror,-Wunused-parameter]
+   39 |     auto dfs = [&](auto self, int vmain.cpp:39:25: error: unused parameter 'self' [-Werror,-Wunused-parameter]
+   39 |     auto dfs = [&](auto self, int v, int pv) ->, int pv) -> void {
+      |                         ^
+ void {
+      |                         ^
+2 errors generated.
+2 errors generated.
+make: *** [a.out] Error 1
+make: *** [a.out] Error 1
