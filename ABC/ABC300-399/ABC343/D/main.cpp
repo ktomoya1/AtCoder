@@ -21,30 +21,27 @@ int main(void) {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    // N：人数, T：時点の総数
-    // i: 秒数
-    // Ai: 選手の番号、Bi：得点増加数
-    // i = 1,2, ..., Tそれぞれについて、今からi + 0.5秒後の選手たちの得点は何種類の値があるか表示する
-    // O(T)は確実で、O(NT)になる可能性がある
-    // どういうデータ型を使うかが問題になってくる
-    int N, T;
-    cin >> N >> T;
-    // どの選手が何点取ってるかを格納する配列
-    vector<ll> score(N);
-    // どの点数に何人いるかを格納する配列
-    map<ll, int> mp;
-    // 最初は全員0点
-    mp[0] = N;
-    while (T--) {
-        int a, b;
+    // 得点の種類を保持するset
+    // その数字が今何個あるのかを数えるmap
+    int n, t;
+    cin >> n >> t;
+    vector<ll> scores(n);
+    map<ll, int> cnt;
+    cnt[0] = n;
+    rep(i, t) {
+        int a; ll b;
         cin >> a >> b;
-        // 番号を0-index-baseにする
-        --a;
-        // a番の選手の得点が唯一だった時、mapから消去
-        if (--mp[score[a]] == 0) mp.erase(score[a]);
-        score[a] += b; // 選手aのスコアを増加
-        ++mp[score[a]]; // 新しい得点を記録する
-        cout << mp.size() << "\n";
+        a--;
+        ll cur_score = scores[a];
+        // cntに追加が先？scoresに追加が先？
+        cnt[cur_score]--;
+        if (cnt[cur_score] == 0) {
+            cnt.erase(cur_score);
+        }
+        // scoresに追加
+        scores[a] += b;
+        cnt[scores[a]]++;
+        cout << cnt.size() << "\n";
     }
     return 0;
 }
