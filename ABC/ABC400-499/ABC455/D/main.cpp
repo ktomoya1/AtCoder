@@ -29,36 +29,52 @@ int main(void) {
     // 連結リストが有効
     int n, q;
     cin >> n >> q;
+    vector<int> c(q), p(q);
+    rep(i, q) cin >> c[i] >> p[i];
 
-    // 現在の数字の上下は、どの数字かを管理するもの
-    vector<int> up(n + 1), down(n + 1);
-    while (q--) {
-        int c, p;
-        cin >> c >> p;
-        int x = down[c];
-        // 変更箇所:移動させるカードの下のカードの上方向、
-        up[x] = 0;
-        // 移動先の一番上のカードの上方向、
-        up[p] = c;
-        // 移動させるカードの下方向
-        down[c] = p;
-    }
-    for (int i = 1; i <= n; i++) {
-        // 現在のカードの下が0でなければ、別の山の一部になっている。
-        // つまり、山はないし、たどって行くとしても途中からになってしまう。
-        if (down[i]) {
-            cout << 0 << " \n"[i == n];
-            continue;
-        }
-        // 逆に、現在のカードの下が0であれば、自身が山の底であり、上にたどっていけて、
-        // 全てのカードを数え上げられる
-        // 山が存在し続けるためにはカードiが一度もCiとして選ばれないことが条件
-        int x = i, ans = 0;
-        while (x) {
-            ans++;
-            x = up[x];
-        }
-        cout << ans << " \n"[i == n];
-    }
+//    連結リストの解き方
+    // auto linked_list = [&]() -> void {
+    //     vector<int> up(n + 1), down(n + 1);
+    //     rep(i, q) {
+    //         // 現在の数字の上下は、どの数字かを管理するもの
+    //         int x = down[c[i]];
+    //         up[x] = 0;
+    //         down[c[i]] = p[i];
+    //         up[p[i]] = c[i];
+    //     }
+    //     for (int i = 1; i <= n; i++) {
+    //         if (down[i]) {
+    //             cout << 0 << " \n"[i == n];
+    //             continue;
+    //         }
+    //         int x = i, cnt = 0;
+    //         while (x) {
+    //             x = up[x];
+    //             cnt++;
+    //         }
+    //         cout << cnt << " \n"[i == n];
+    //     }
+    // };
+
+//    Union-Findの解き方O((N + Q)・α(N))
+    auto union_find = [&]() -> void {
+        vector<int> parent(n + 1);
+        for (int i = 1; i <= n; i++) parent[i] = i;
+        cerr << "parent[5]:" << parent[5] << "\n";
+
+        // parent[x] = self(self, parent[x]): xの親の親まで辿って、それを保持する
+        // これをしないとO(NQ)になりTLE
+        auto find = [&](auto& self, int x) -> int {
+            return parent[x] == x ? x : parent[x] = self(self, parent[x]);
+        };
+        rep(i, q) parent[c[i]] = p[i];
+        vector<int> size(n + 1);
+        for (int i = 1; i <= n; i++) size[find(find, i)]++;
+        for (int i = 1; i <= n; i++) cout << size[i] << " \n"[i == n];
+    };
+
+
+    // linked_list();
+    union_find();
     return 0;
 }

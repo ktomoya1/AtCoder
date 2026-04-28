@@ -21,6 +21,9 @@ int main(void) {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
+    // ## 頻度分布、map、ソート
+    // reverse_map[value] = keyのように、mapのvalueをkeyに移動させようとすると、
+    // 元のmapの値と衝突する可能性がある。おそらくそれでWAになった
     int n, k;
     cin >> n >> k;
     vector<ll> a(n);
