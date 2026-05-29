@@ -27,15 +27,11 @@ int main(void) {
     cin >> s;
 
     int n = s.size();
-    bool seen_sharp = false;
     for (int i = 0; i < n; i++) {
-        if (!seen_sharp && s[i] == '.') {
-            s[i] = 'o';
-            seen_sharp = true;
-        } else if (s[i] == '#') {
-            seen_sharp = false;
-        }
+        if (s[i] == '#') cout << '#';
+        else if (i == 0 || s[i - 1] == '#') cout << 'o';
+        else cout << '.';
     }
-    cout << s << "\n";
+    cout << "\n";
     return 0;
 }
