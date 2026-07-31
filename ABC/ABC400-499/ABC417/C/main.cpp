@@ -32,19 +32,15 @@ int main(void) {
 
     int n;
     cin >> n;
-    vector<int> a(n);
-    rep(i, n) cin >> a[i];
 
-    vector<int> cnt_a(n);
-    rep(i, n) {
-        if (i + a[i] < n) cnt_a[i + a[i]]++;
-    }
-    vector<int> cnt_b(n);
-    for (int j = 1; j < n; j++) {
-        if (j >= a[j]) cnt_b[j - a[j]]++;
-    }
     ll ans = 0;
-    rep(i, n) ans += (ll)cnt_a[i] * cnt_b[i];
+    vector<int> cnt(1e6);
+    rep(i, n) {
+        int a;
+        cin >> a;
+        if (i - a >= 0) ans += cnt[i - a];
+        cnt[i + a]++;
+    }
     cout << ans << "\n";
     return 0;
 }
