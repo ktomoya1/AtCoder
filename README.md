@@ -19,3 +19,9 @@ Please note the following:
 
 ## 👤 Profile
 * **AtCoder:** [ktomoya](https://atcoder.jp/users/ktomoya)
+
+## 環境・使い方
+* 新規問題: `scripts/new.sh abc468 c` → `ABC/ABC400-499/ABC468/C/` に `template/` をコピーし、`oj d` でサンプルを `test/` に取得
+* テスト: 問題ディレクトリで `make test`（`g++ -std=c++23 -O2` でビルド → `oj t`）
+* 必要ツール: g++ / [online-judge-tools](https://github.com/online-judge-tools/oj) / [ACL](https://github.com/atcoder/ac-library)（任意）
+* Claude Codeクラウドでは環境「atcoder」を選ぶと、atcoder.jp への接続とツール導入が自動で済む
